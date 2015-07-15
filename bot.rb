@@ -36,7 +36,8 @@ bot.on_message do |message, info|
   end
 
   # split the message in 2 to get what was actually said.
-  botname, command = message.split(': ', 2)
+  botname = message.split(' ').first
+  command = message.split(' ').shift.join(" ")
 
   # answer the query!
   # this bot simply echoes the message back
