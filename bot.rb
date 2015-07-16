@@ -21,7 +21,6 @@ log = ChatAdapter.log
 
 # Do this thing in this block each time the bot hears a message:
 bot.on_message do |message, info|
-  puts "test"
   # ignore all messages not directed to this bot
   unless message.start_with? 'mesh-bot'
     next # don't process the next lines in this block
@@ -37,11 +36,20 @@ bot.on_message do |message, info|
 
   # split the message in 2 to get what was actually said.
   botname = message.split(' ').first
-  command = message.split(' ').shift.join(" ")
+  messages = message.split(' ')
+  messages.shift
+  command = messages.join(" ")
+
+  if command == "make mesh work" then 
+
+   "@#{info[:user]}: The fate of Mesh is out my control but I will sacrifice a goat to as many gos as possible."
+  else 
+    "@#{info[:user]}: #{command}"
+  end
 
   # answer the query!
   # this bot simply echoes the message back
-  "@#{info[:user]}: #{command}"
+  
 end
 
 # actually start the bot
