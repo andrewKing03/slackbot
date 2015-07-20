@@ -3,3 +3,4 @@ source 'https://rubygems.org'
 gem 'chat-adapter', :github => 'macobo/chat-adapter'
 
 gem 'rest-client', :github => 'rest-client/rest-client'
+

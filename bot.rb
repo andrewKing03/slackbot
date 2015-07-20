@@ -3,6 +3,7 @@ require 'chat-adapter'
 # also use the local HerokuSlackbot class defined in heroku.rb
 require './heroku'
 require 'rest-client'
+require 'json'
 
 # if we're on our local machine, we want to test our bot via shell, but when on
 # heroku, deploy the actual slackbot.
@@ -11,46 +12,64 @@ require 'rest-client'
 # uses when responding.
 if ARGV.first == 'heroku'
   bot = HerokuSlackAdapter.new(nick: 'mesh-bot')
+  @meshuser = ENV['MESH_USER']
+  @meshpass = ENV['MESH_PASS']
 else
-  puts "test"
   bot = ChatAdapter::Shell.new(nick: 'mesh-bot')
+  @meshuser = 'a4admin'
+  @meshpass = 'Overwhelmingly-Opposed-Dingo'
 end
+
+
+
 
 # Feel free to ignore this - makes logging easier
 log = ChatAdapter.log
 
 # Do this thing in this block each time the bot hears a message:
 bot.on_message do |message, info|
-  # ignore all messages not directed to this bot
-  unless message.start_with? 'mesh-bot'
-    next # don't process the next lines in this block
-  end
-
-  # Conditionally send a direct message to the person saying whisper
-  if message == 'mesh-bot whisper'
-    # log some info - useful when something doesn't work as expected
-    log.debug("Someone whispered! #{info}")
-    # and send the actual message
-    bot.direct_message(info[:user], "whisper-whisper")
-  end
 
   # split the message in 2 to get what was actually said.
-  botname = message.split(' ').first
   messages = message.split(' ')
+
+  botname = messages.first
   messages.shift
-  command = messages.join(" ")
+  command = messages.first
+  messages.shift
+  params = messages.join(' ')
 
-  if command == "make mesh work" then 
 
-   "@#{info[:user]}: The fate of Mesh is out my control but I will sacrifice a goat to as many gos as possible."
-  else 
-    "@#{info[:user]}: #{command}"
+ response = case command
+  when "list"
+    #mesh-bot list sites
+    #mesh-bot list sites (production,dev)
+    list_sites
+  when "deployed"
+    #mesh-bot list deployed (sitename)
+    #mesh-bot list deployed version (version number)
+  when ""
+      "what the fuck, you can't just yell my name in a channel and expect me to do shit for you!"
   end
 
-  # answer the query!
-  # this bot simply echoes the message back
+
+
+   "@#{info[:user]}: #{response}"
   
 end
+
+def list_sites(type=nil)
+
+  url = "https://#{@meshuser}:#{@meshpass}@mesh1.kailabor.com/mesh/sitelist"
+  response = RestClient.get url
+
+  site_list = []
+  JSON.parse(response).each do | site |
+    site_list << site["name"]
+  end
+
+  return site_list.join(',')
+end
+
 
 # actually start the bot
 bot.start!
