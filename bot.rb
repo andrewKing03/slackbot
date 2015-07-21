@@ -57,9 +57,7 @@ bot.on_message do |message, info|
   else "what the fuck, you can't just yell my name in a channel and expect me to do shit for you! I am not an Usher!"
   end
 
-
-
-   "@#{info[:user]}: #{response}"
+   #{}"@#{info[:user]}: #{response}"
   
 end
 
@@ -78,8 +76,8 @@ def list_sites(type=nil)
      site_list << site["name"] 
    end
   end
+  return site_list.join(' \n ').gsub('\n','\\n')
 
-  return site_list.join(' \\\n ')
 end
 
 
