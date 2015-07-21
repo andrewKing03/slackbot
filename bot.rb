@@ -21,7 +21,7 @@ else
 end
 
 # Feel free to ignore this - makes logging easier
-log = ChatAdapter.log
+@log = ChatAdapter.log
 
 # Do this thing in this block each time the bot hears a message:
 bot.on_message do |message, info|
@@ -61,16 +61,17 @@ def list_sites(type=nil)
 
   site_list = []
   JSON.parse(response).each do | site |
-    if type == "dev" && !site[:production] then
-     site_list << site["name"] 
-   elsif type == "production" && site[:production] then
-     site_list << site["name"] 
-   else
+    is_production = site["production"] 
+    if type == "dev" then
+     site_list << site["name"] if !is_production
+   elsif type == "production" || type == "prod" then
+     site_list << site["name"] if is_production
+   elsif !type
      site_list << site["name"] 
    end
   end
 
-  sites = site_list.join("\n")
+  sites = site_list.sort.join("\n")
 end
 
 # actually start the bot
