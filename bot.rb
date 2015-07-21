@@ -54,7 +54,6 @@ bot.on_message do |message, info|
   end
 
    #{}"@#{info[:user]}: #{response}"
-  
 end
 
 def list_sites(type=nil)
