@@ -52,8 +52,6 @@ bot.on_message do |message, info|
     #mesh-bot deployed version (version number)
   else "what the fuck, you can't just yell my name in a channel and expect me to do shit for you! I am not an Usher!"
   end
-
-   #{}"@#{info[:user]}: #{response}"
 end
 
 def list_sites(type=nil)
