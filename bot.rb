@@ -70,16 +70,16 @@ def list_sites(type=nil)
 
   site_list = []
   JSON.parse(response).each do | site |
-    if type == "dev" && !site[:production].value then
+    if type == "dev" && !site[:production] then
      site_list << site["name"] 
-   elsif type == "production" && site[:production].value then
+   elsif type == "production" && site[:production] then
      site_list << site["name"] 
    else
      site_list << site["name"] 
    end
   end
 
-  return site_list.join('\n')
+  return site_list.join('\\n')
 end
 
 
