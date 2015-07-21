@@ -71,7 +71,7 @@ def list_sites(type=nil)
      site_list << site["name"] 
    end
   end
-  return site_list
+  return site_list.join(' \\n')
 
 end
 
