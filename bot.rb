@@ -41,12 +41,19 @@ bot.on_message do |message, info|
 
  response = case command
   when "list"
-    #mesh-bot list sites
-    #mesh-bot list sites (production,dev)
-    list_sites
+    messages = params.split(' ')
+    second_command = messages.first
+    messages.shift
+    case second_command
+    when "sites"
+      #mesh-bot list sites
+      #mesh-bot list sites (production,dev)
+      type = messages.first
+      list_sites(type)
+    end
   when "deployed"
-    #mesh-bot list deployed (sitename)
-    #mesh-bot list deployed version (version number)
+    #mesh-bot deployed (sitename)
+    #mesh-bot deployed version (version number)
   else "what the fuck, you can't just yell my name in a channel and expect me to do shit for you! I am not an Usher!"
   end
 
@@ -63,10 +70,16 @@ def list_sites(type=nil)
 
   site_list = []
   JSON.parse(response).each do | site |
-    site_list << site["name"]
+    if type == "dev" && !site[:production].value then
+     site_list << site["name"] 
+   elsif type == "production" && site[:production].value then
+     site_list << site["name"] 
+   else
+     site_list << site["name"] 
+   end
   end
 
-  return site_list.join(',')
+  return site_list.join('\n')
 end
 
 
