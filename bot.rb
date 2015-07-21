@@ -20,9 +20,6 @@ else
   @meshpass = 'Overwhelmingly-Opposed-Dingo'
 end
 
-
-
-
 # Feel free to ignore this - makes logging easier
 log = ChatAdapter.log
 
@@ -37,7 +34,6 @@ bot.on_message do |message, info|
   command = messages.first
   messages.shift
   params = messages.join(' ')
-
 
  response = case command
   when "list"
@@ -79,7 +75,6 @@ def list_sites(type=nil)
   return site_list.join(' \n ')
 
 end
-
 
 # actually start the bot
 bot.start!
