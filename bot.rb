@@ -70,8 +70,7 @@ def list_sites(type=nil)
    end
   end
 
-  sites = site_list.join('\n')
-
+  sites = site_list.join("\n")
 end
 
 # actually start the bot
