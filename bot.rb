@@ -74,7 +74,6 @@ def list_sites(type=nil)
 
   sites = site_list.join('\n')
 
-
 end
 
 # actually start the bot
