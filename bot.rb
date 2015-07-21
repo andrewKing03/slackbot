@@ -47,8 +47,7 @@ bot.on_message do |message, info|
   when "deployed"
     #mesh-bot list deployed (sitename)
     #mesh-bot list deployed version (version number)
-  when ""
-      "what the fuck, you can't just yell my name in a channel and expect me to do shit for you!"
+  else "what the fuck, you can't just yell my name in a channel and expect me to do shit for you! I am not an Usher!"
   end
 
 
