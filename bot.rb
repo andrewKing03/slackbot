@@ -79,7 +79,7 @@ def list_sites(type=nil)
    end
   end
 
-  return site_list.join(' \\n ')
+  return site_list.join(' \\\n ')
 end
 
 
