@@ -41,9 +41,7 @@ bot.on_message do |message, info|
     second_command = messages.first
     messages.shift
     case second_command
-    when "sites"
-      #mesh-bot list sites
-      #mesh-bot list sites (production,dev)
+    when "sites" #mesh-bot list sites (production,dev)
       type = messages.first
       list_sites(type)
     end
@@ -52,20 +50,14 @@ bot.on_message do |message, info|
     second_command = messages.first
     messages.shift
     case second_command
-    when "client"
-      #mesh-bot list sites
-      #mesh-bot list sites (production,dev)
+    when "client" #mesh-bot deployed client (sitename)
       site_name = messages.first
       deployed_client_site(site_name)
-    when "version"
-      "Not implemented yet, blame Jonas"
+    when "version"  #mesh-bot deployed version (version number)
+
     end
-    #mesh-bot deployed (sitename)
-    #mesh-bot deployed version (version number)
   when "help"
     "mesh-bot help!\nAccepted commands:\n list sites [dev,production,prod] \n deployed client [sitename] \n deployed version [4.2.111]"
-
-  else "what the fuck, you can't just yell my name in a channel and expect me to do shit for you! I am not an Usher!"
   end
 end
 
@@ -93,7 +85,7 @@ def deployed_client_site(site_name)
   url = "https://#{@meshuser}:#{@meshpass}@mesh1.kailabor.com/mesh/sites/#{site_name}/deployments"
   raw_response = RestClient.get url
 
-raw_response = JSON.parse(raw_response)
+  raw_response = JSON.parse(raw_response)
   if !raw_response then 
     response  = "No site named #{site_name} found!"
   else  
@@ -114,8 +106,9 @@ raw_response = JSON.parse(raw_response)
 
      "#{site_name} has Kai client version: #{full_version}"
   end
-
 end
+
+def deployed_version_number()
 
 # actually start the bot
 bot.start!
