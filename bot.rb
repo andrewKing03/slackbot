@@ -109,6 +109,8 @@ def deployed_client_site(site_name)
 end
 
 def deployed_version_number()
+        
+end
 
 # actually start the bot
 bot.start!
